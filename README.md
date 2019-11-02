@@ -153,7 +153,11 @@ The table definition is as follows:
 
 ## API endpoint
 
+**Login SQL code**
+
 ![login sql](sql_login.png)
+
+**Search SQL code**
 
 ![search sql](sql_search.png)
 
