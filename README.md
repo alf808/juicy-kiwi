@@ -153,9 +153,11 @@ The table definition is as follows:
 
 ## API endpoint
 
-1. code [products /rest](https://github.com/bkimminich/juice-shop/blob/master/routes/search.js)
+![login sql](sql_login.png)
 
-1. code [products /rest/products/search](https://github.com/bkimminich/juice-shop/tree/master/frontend/src/app/Services)
+![search sql](sql_search.png)
+
+* [SQL code used in search](https://github.com/bkimminich/juice-shop/blob/master/routes/search.js)
 
 
 ## How to avoid sql injection
