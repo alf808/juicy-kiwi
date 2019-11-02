@@ -22,7 +22,7 @@ This web application is vulnerable to SQL injection attacks specifically reshapi
 
 Before a hacker can  start exploiting an insecure application, s/he must figure out how the application handles **bad** input first.
 
-One way of testing is to put a tick (apostrophe) at the end of a text. Then two things should happen
+The best and original way of testing is with the single quote technique. Using the tick technique, two things should happen:
 
 1. The input is sanitized or cleaned and returns a nice error message.
 
@@ -38,10 +38,9 @@ The error response is crucial in determining the attack.
 
 What will the attacker see on form page by inputting a single quote? It depends on how the application handles errors in the database. In this case, something nondescript. But what is remarkable is that there are no errors like, "**invalid email address and password**". But... we are seeing SQLite errors. Now the hacker also knows that the input is not being sanitized. And if there is no sanization, there's potential exploitation.
 
-1. go to juice-shop
+![inspector errors](descriptive_errors.png)
 
-   login page
-   type
+1. On the juice-shop app login page, type
    ```
    ' or true;
    ```
