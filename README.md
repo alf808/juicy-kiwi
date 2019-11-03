@@ -27,10 +27,12 @@ The best and original way of testing is with the single quote technique. Using t
 1. The input is sanitized or cleaned and returns a nice error message.
 
 1. There is no sanitization we get something like below or something blatant or nothing.
-
+******
 ## Tick Technique
 
-First enter just an apostrophe in the Email input field. What errors do we get? Then try putting a tick at end of an existing user email like below.
+First enter just an apostrophe in the Email input field. What errors do we get?
+
+Then try putting a tick at end of an existing user email like below.
 
 ![end-tick](object_Object.png)
 
@@ -40,7 +42,7 @@ What will the attacker see on form page by inputting a single quote? It depends 
 
 ![inspector errors](descriptive_errors.png)
 
-1. On the juice-shop app login page, type
+* On the juice-shop app login page, type
    ```
    ' or true;
    ```
@@ -52,25 +54,25 @@ What will the attacker see on form page by inputting a single quote? It depends 
     dkfdk' or true -- blahblah
    ```
 
-1. go to code [login code](https://github.com/bkimminich/juice-shop/blob/master/routes/login.js)
+* go to code [login code](https://github.com/bkimminich/juice-shop/blob/master/routes/login.js)
 
     We expose the code above and the backend sqlite on the web interface.
 
-1. show juiceshop.sqlite
+~~1. show juiceshop.sqlite~~
 
-1. By the time the web app sends the query to sqlite, it looks like this.
+* By the time the web app sends the query to sqlite, it looks like this.
     ```
     SELECT * FROM Users WHERE email='dkfdk' or true -- blahblah AND password='somehashedpassword'
     ```
 
     Due to the inclusion of a comment delimiter in the email field the password portion of the query will be ignored.
 
-1. in fact, you can input this with any emails, like:
+* in fact, you can input this with any emails, like:
     ```
     support@juice-sh.op'; -- active
     chris.pike@juice-sh.op'; -- inactive
     ```
-**Make everything else irrelevant following the semicolon as it closes the SQL statement**
+******
 
 ## UNION based
 ### **List all products (whether active or not)**
@@ -93,7 +95,7 @@ http://localhost:3000/rest/products/search?q=sldjfwo')) UNION SELECT sql,2,3,4,5
 
 ### **ephemeral accounts**
 
-when you register a new account, from the inspector we know that the fields (or keys) are used.
+when you register a new account, from the inspector we know that the fields (or keys) used are:
 
 ![columns used](upon_registration.png)
 
